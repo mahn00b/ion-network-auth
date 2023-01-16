@@ -1,0 +1,22 @@
+.Dashboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .actions {
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 2rem;
+
+    .buttonHeader {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .view {
+      min-width: 300px;
+    }
+  }
+}

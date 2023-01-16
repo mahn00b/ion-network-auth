@@ -1,6 +1,4 @@
-// @ts-ignore
-import { sign } from '@decentralized-identity/ion-tools';
-import { decodeKey } from '../../utils/Crypto';
+import { signMessage } from '../../utils/ion';
 
 export const register = async (email: string): Promise<UserCredsResponse> => {
   const response = await fetch('/api/register', {
@@ -16,12 +14,7 @@ export const register = async (email: string): Promise<UserCredsResponse> => {
 }
 
 export const signIn = async (email: string, token: string): Promise<boolean> => {
-  const privateJwk = decodeKey(token);
-
-  const message = await sign({
-    payload: 'authentication message',
-    privateJwk
-  })
+  const message = await signMessage(token, 'Authentication message');
 
   const response = await fetch('/api/signin', {
     method: 'post',
