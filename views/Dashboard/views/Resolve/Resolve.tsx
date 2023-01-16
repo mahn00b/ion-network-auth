@@ -7,12 +7,9 @@ import {
     Dialog,
     DialogTitle,
     DialogContent,
-    Snackbar,
-    Slide
   } from "@mui/material";
 import { resolveAddress } from "../../../../utils/ion";
 import CopyText from '../../../../components/CopyText';
-import 'react-json-pretty/themes/acai.css';
 
 export default function Resolve() {
   const [did, setDID] = useState('');

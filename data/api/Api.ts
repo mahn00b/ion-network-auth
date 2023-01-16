@@ -26,3 +26,10 @@ export const signIn = async (email: string, token: string): Promise<boolean> => 
 
   return response.status === 200 ? true : false;
 };
+
+export const signOut = async (): Promise<boolean> => {
+
+  const response = await fetch('/api/signout');
+
+  return response.status === 200 ? true : false;
+};

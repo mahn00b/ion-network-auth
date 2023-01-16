@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse, GetServerSidePropsContext } from 'next';
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
 
 const COOKIE_NAME = 'SESSION';
 const COOKIE_PATH = '/';
@@ -33,6 +33,11 @@ export default class Session {
     this.session = user;
 
     this.save();
+  }
+
+  end() {
+    this.session = null
+    destroyCookie({ res: this.res }, COOKIE_NAME);
   }
 
   save() {

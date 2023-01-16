@@ -1,17 +1,18 @@
+import { useState } from 'react';
 import {
   Container,
   Box,
   Typography,
   Button,
   ButtonGroup,
-  TextField
 } from '@mui/material'
+import { useRouter } from 'next/router';
+import { signOut } from '../../data/api';
 import CopyText from '../../components/CopyText';
 import Sign from './views/Sign';
 import Verify from './views/Verify';
 import Resolve from './views/Resolve';
 import styles from './Dashboard.module.scss';
-import { useState } from 'react';
 
 export interface DashboardProps {
   session: UserData;
@@ -24,6 +25,7 @@ export default function Dashboard({
 }: DashboardProps) {
   type View = 'sign' | 'resolve' | 'verify'
   const [view, setView] = useState<View>('sign')
+  const router = useRouter();
 
   let ui;
 
@@ -38,8 +40,15 @@ export default function Dashboard({
       ui = <Verify />
   }
 
+  const onSignOut = async () => {
+    await signOut();
+
+    router.push('/');
+  }
+
   return (
     <Container className={styles.Dashboard}>
+      <Button className={styles.signOut} onClick={onSignOut}>Sign out</Button>
       <Box className={styles.address} maxWidth="30rem">
         <Typography>Your DID Address</Typography>
         <CopyText data={DIDUri} />
@@ -58,7 +67,6 @@ export default function Dashboard({
                 </Button>)
               )
             }
-
           </ButtonGroup>
         </Box>
         <Box className={styles.view}>
