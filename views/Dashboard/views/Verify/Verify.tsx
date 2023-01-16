@@ -11,7 +11,7 @@ import {
   } from "@mui/material";
 import { verifyMessage } from "../../../../utils/ion";
 
-export default function Sign() {
+export default function Verify() {
   const [message, setMessage] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);

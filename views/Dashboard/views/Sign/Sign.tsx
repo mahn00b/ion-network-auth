@@ -78,7 +78,7 @@ const SignedMessageDialog = ({
       <Typography>Your Signed Message</Typography>
     </DialogTitle>
     <DialogContent>
-      <CopyText text={message} />
+      <CopyText data={message} />
     </DialogContent>
   </Dialog>
 )

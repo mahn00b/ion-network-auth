@@ -33,7 +33,7 @@ export default function CredentialsDialog({
             <Typography>
               This is your DID address. (You can see this later)
             </Typography>
-            <DynamicCopyText text={DIDUri} />
+            <DynamicCopyText data={DIDUri} />
           </Box>
           <Box sx={{ marginTop: '1rem' }}>
             <Typography sx={{ marginBottom: '.5rem' }}>
@@ -43,7 +43,7 @@ export default function CredentialsDialog({
               This is the last time we&apos;ll show you your token. For your saftey, we don&apos;t store your
               token. Think of it like your password.
             </Typography>
-            <DynamicCopyText text={token} />
+            <DynamicCopyText data={token} />
           </Box>
         </Box>
       </DialogContent>

@@ -21,8 +21,12 @@ export const verifyMessage = async (message: string, uri: string) => {
 }
 
 export const resolvePublicKey = async (uri: string) => {
-  const did = await resolve(uri);
+  const did = await resolveAddress(uri);
   const { publicKeyJwk } = did.didDocument.verificationMethod[0];
 
   return publicKeyJwk;
+}
+
+export const resolveAddress = async (uri: string) => {
+  return await resolve(uri)
 }

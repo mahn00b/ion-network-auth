@@ -7,36 +7,66 @@ import {
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import styles from './CopyText.module.scss';
 import { useState } from 'react';
+import JSONPretty from 'react-json-pretty';
+import 'react-json-pretty/themes/acai.css';
 
 interface CopyTextProps {
-  text: string
+  data: string;
+  type?: 'json' | 'default'
 }
 
 export default function CopyText({
-  text = ''
+  data = '',
+  type = 'default'
 }: CopyTextProps) {
   const [open, setOpen] = useState(false);
   const copy = () => {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(data);
     setOpen(true)
   }
 
   const handleClose = () => setOpen(false);
+  let view;
+  switch (type) {
+    case 'json':
+      view =
+      (
+      <>
+        <Box component="span" onClick={copy}>
+          <ContentPasteIcon
+            sx={{ position: 'absolute', right: '1rem', top: '1rem', color: 'white'}}
+          />
+        </Box>
+        <JSONPretty json={data} mainStyle="padding:1rem;border-radius:4px"/>
+      </>
+    );
+    break;
+    default:
+      view = (
+        <Box
+          className={styles.CopyText}
+          onClick={copy}
+        >
+          <Typography className={styles.text}>{data}</Typography>
+          <ContentPasteIcon />
+        </Box>
+      )
+  }
+
 
   return (
-    <Box
-      className={styles.CopyText}
-      onClick={copy}
-    >
-      <Typography className={styles.text}>{text}</Typography>
-      <ContentPasteIcon className={styles.icon} />
-      <Snackbar
+    <>
+    {view}
+    <Snackbar
+        autoHideDuration={2000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center'}}
         open={open}
         onClose={handleClose}
         TransitionComponent={Slide}
         message="Copied!"
         key={Slide ? Slide.name : ''}
       />
-    </Box>
+    </>
+
   )
 }
