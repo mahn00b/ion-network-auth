@@ -79,11 +79,11 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item>
-                <NextLink href="/register">
+                {/* <NextLink href="/register">
                   <Link href="#" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
-                </NextLink>
+                </NextLink> */}
               </Grid>
             </Grid>
           </Box>

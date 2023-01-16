@@ -1,5 +1,5 @@
 // import { GetServerSideProps } from 'next'
-import Register from '../../views/Register';
+import Dashboard from '../views/Dashboard';
 
 // interface PageProps {
 //   session: any
@@ -11,6 +11,6 @@ import Register from '../../views/Register';
 
 export default function page() {
   return (
-    <Register />
+    <Dashboard />
   )
 }

@@ -1,10 +1,11 @@
 // Simple base64 encoding for demo
 export const encodeKey = (privateKey: object) => {
-  return Buffer.from(JSON.stringify(privateKey)).toString('base64');
+  console.log(privateKey)
+  return Buffer.from(JSON.stringify(privateKey), 'utf-8').toString('base64');
 }
 
 export const decodeKey = (base64String: string) => {
-  const JSONString = Buffer.from(base64String).toString('ascii');
+  const JSONString = Buffer.from(base64String, 'base64').toString('utf-8');
 
   try {
     const key = JSON.parse(JSONString);

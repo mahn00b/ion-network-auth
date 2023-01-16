@@ -1,0 +1,16 @@
+.CopyText {
+  width: 100%;
+
+  display: flex;
+  padding: .5rem .25rem .25rem 1rem;
+
+  border: 1px solid black;
+  border-radius: 4px;
+
+  .text {
+    max-width: calc(100% - 2rem);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

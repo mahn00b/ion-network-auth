@@ -5,11 +5,6 @@ import { encodeKey } from '../../utils/Crypto';
 // @ts-ignore
 import { DID, generateKeyPair } from '@decentralized-identity/ion-tools';
 
-interface UserCredsResponse {
-  privateKey: string;
-  URI: string;
-}
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<UserCredsResponse>,
@@ -44,8 +39,8 @@ export default async function handler(
   new Session(req, res).create(user);
 
   const response = {
-    privateKey: encodeKey(authnKeys.privateKey),
-    URI: uri
+    token: encodeKey(authnKeys.privateJwk),
+    DIDUri: uri
   }
 
   res.status(200).json(response)

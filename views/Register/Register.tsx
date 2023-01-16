@@ -1,27 +1,38 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { useState, FormEvent} from 'react';
+import {
+  Avatar,
+  Button,
+  TextField,
+  Grid,
+  Box,
+  Link,
+  Container,
+  Typography,
+  Backdrop,
+  CircularProgress
+} from '@mui/material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import NextLink from 'next/link';
 import Copyright from '../../components/Copyright';
-
+import CredentialsDialog from '../../components/CredentialsDialog';
+import { register } from '../../data/api'
 
 export default function Register() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [inFlight, setInFlight] = useState(false);
+  const [creds, setCreds] = useState<UserCredsResponse | null>(null);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    const email = data.get('email')?.toString()
+    setInFlight(true)
+
+    const response = await register(email as string);
+
+    setCreds(response);
+    setInFlight(false);
   };
 
   return (
@@ -38,7 +49,7 @@ export default function Register() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Create a new DID
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -51,10 +62,6 @@ export default function Register() {
               autoComplete="email"
               autoFocus
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth
@@ -66,14 +73,21 @@ export default function Register() {
             <Grid container>
               <Grid item>
                 <NextLink href="/signin">
-                  <Link href="#" variant="body2">
+                  <Button sx={{ textTransform: 'none' }}>
                     {"Already have an account? Sign in"}
-                  </Link>
+                  </Button>
                 </NextLink>
               </Grid>
             </Grid>
           </Box>
         </Box>
+        {inFlight &&
+          <Backdrop
+            open={true}
+          >
+            <CircularProgress />
+          </Backdrop>}
+        {!inFlight && creds && <CredentialsDialog DIDUri={creds.DIDUri} token={creds.token} />}
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
   );
