@@ -2,7 +2,6 @@ import { FormEvent, useState } from 'react';
 import { Box, Button, TextField, Typography, Dialog, DialogTitle, DialogContent } from "@mui/material";
 import CopyText from '../../../../components/CopyText';
 import { signMessage } from "../../../../utils/ion";
-import styles from './Sign.module.scss';
 
 export default function Sign() {
   const [selection, setSelection] = useState('');
@@ -26,7 +25,7 @@ export default function Sign() {
   }
 
   return (
-    <Box className={styles.Sign} component="form" noValidate onSubmit={handleSubmit}>
+    <Box component="form" noValidate onSubmit={handleSubmit}>
       <Typography fontSize="1.5rem" align="center">Sign a Message</Typography>
       <TextField
         margin="normal"

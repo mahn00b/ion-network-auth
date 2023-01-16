@@ -23,7 +23,9 @@ export default class Session {
     return !!this.session;
   }
 
-  get() {
+  get(): UserData {
+    if (!this.session) throw new Error('Session does not exist')
+
     return this.session
   }
 

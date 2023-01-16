@@ -1,7 +1,13 @@
 .Dashboard {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .address {
+    max-width: 30rem;
+    padding-bottom: 2rem;
+  }
 
   .actions {
     border: 1px solid gray;

@@ -6,16 +6,26 @@ import {
   ButtonGroup,
   TextField
 } from '@mui/material'
+import CopyText from '../../components/CopyText';
 import Sign from './views/Sign';
+import Verify from './views/Verify';
 import styles from './Dashboard.module.scss';
 
-interface DashboardProps {
+export interface DashboardProps {
   session: UserData;
 }
 
-export default function Dashboard() {
+export default function Dashboard({
+  session: {
+    DIDUri
+  }
+}: DashboardProps) {
   return (
     <Container className={styles.Dashboard}>
+      <Box className={styles.address} maxWidth="30rem">
+        <Typography>Your DID Address</Typography>
+        <CopyText text={DIDUri} />
+      </Box>
       <Box className={styles.actions}>
         <Box className={styles.buttonHeader}>
           <ButtonGroup>
@@ -25,7 +35,7 @@ export default function Dashboard() {
           </ButtonGroup>
         </Box>
         <Box className={styles.view}>
-          <Sign />
+          <Verify />
         </Box>
       </Box>
     </Container>

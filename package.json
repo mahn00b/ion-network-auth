@@ -27,6 +27,7 @@
     "eslint": "8.31.0",
     "eslint-config-next": "13.1.1",
     "isomorphic-fetch": "^3.0.0",
+    "jose": "^4.11.2",
     "next": "13.1.1",
     "node-fetch": "^3.3.0",
     "nookies": "^2.5.2",

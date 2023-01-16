@@ -1,16 +1,29 @@
-// import { GetServerSideProps } from 'next'
-import Dashboard from '../views/Dashboard';
+import { GetServerSidePropsContext } from 'next'
+import Session from '../data/session';
+import Dashboard, { DashboardProps } from '../views/Dashboard';
 
-// interface PageProps {
-//   session: any
-// }
+export function getServerSideProps({ req, res }: GetServerSidePropsContext) {
+  const helper = new Session(req, res);
 
-// export const getServerSideProps: GetServerSideProps<PageProps> = ({ req, res }) => {
+  // Redirect to sign in if user isn't logged in.
+  if (!helper.hasSession()) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 
-// }
+  return {
+    props: {
+      session: helper.get(),
+    }
+  };
+}
 
-export default function page() {
+export default function page(props: DashboardProps) {
   return (
-    <Dashboard />
+    <Dashboard {...props} />
   )
 }
