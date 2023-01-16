@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { setCookie, parseCookies } from 'nookies'
 
 const COOKIE_NAME = 'user_DB';
-const COOKIE_PATH = '/user';
+const COOKIE_PATH = '/';
 const ONE_WEEK = 7 * 24 * 60 * 60;
 
 const COOKIE_ARGS = {
@@ -15,7 +15,8 @@ export default class User {
   res: NextApiResponse;
 
   constructor(req: NextApiRequest, res: NextApiResponse) {
-    this.db = parseCookies({ req }, { path: COOKIE_PATH })[COOKIE_NAME] || {}
+    const cookie = parseCookies({ req }, { path: COOKIE_PATH })[COOKIE_NAME] || ''
+    this.db = JSON.parse(cookie)
     this.res = res;
   }
 

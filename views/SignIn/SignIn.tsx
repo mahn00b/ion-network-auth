@@ -1,33 +1,46 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { FormEvent, useState } from 'react';
+import {
+  Avatar,
+  Button,
+  TextField,
+  Grid,
+  Box,
+  Container,
+  Typography,
+  Backdrop,
+  Alert
+} from '@mui/material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import Copyright from '../../components/Copyright';
-
-const theme = createTheme();
+import { signIn } from '../../data/api';
 
 export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [error, setError] = useState(false);
+  const [inFlight, setInFlight] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const email = data.get('email') as string;
+    const token = data.get('token') as string;
+    setInFlight(true);
+
+    try {
+      const isSignedIn = await signIn(email, token);
+
+      if (isSignedIn) {
+        router.push('/dashboard')
+      }
+    } catch {
+      setInFlight(false);
+      setError(true);
+    }
   };
 
   return (
-    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -58,16 +71,12 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              placeholder="password"
-              name="password"
-              label="Password"
+              placeholder="Token"
+              name="token"
+              label="Token"
               type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              id="token"
+              autoComplete="off"
             />
             <Button
               type="submit"
@@ -79,17 +88,18 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item>
-                {/* <NextLink href="/register">
-                  <Link href="#" variant="body2">
+                <NextLink href="/register">
+                  <Button>
                     {"Don't have an account? Sign Up"}
-                  </Link>
-                </NextLink> */}
+                  </Button>
+                </NextLink>
               </Grid>
             </Grid>
           </Box>
         </Box>
+        <Backdrop open={inFlight} />
+        {error && <Alert variant="filled" severity="error">A server error occurred. Please check your credentials and try again.</Alert>}
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-    </ThemeProvider>
   );
 }
