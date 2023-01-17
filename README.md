@@ -83,7 +83,7 @@ When the User wants to log in. They submit their email and token. The token is u
 
 The message is verified by getting the DID URI mapped to the user's email and verifies the auth message. If the verification passes a session is created and the user has successfully been authenticated.
 
-![Sign In Flow](./screenshots/ion-auth-flow.drawio.png)
+![Sign In Flow](./docs/screenshots/ion-auth-flow.drawio.png)
 
 ## Reflections
 
