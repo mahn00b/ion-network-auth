@@ -8,7 +8,7 @@ import {
     DialogTitle,
     DialogContent,
   } from "@mui/material";
-import { resolveAddress } from "../../../../utils/ion";
+import { resolveAddress } from "../../../../utils/Ion";
 import CopyText from '../../../../components/CopyText';
 
 export default function Resolve() {

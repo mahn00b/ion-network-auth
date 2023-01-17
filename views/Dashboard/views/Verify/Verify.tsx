@@ -9,7 +9,7 @@ import {
     DialogContent,
     Alert
   } from "@mui/material";
-import { verifyMessage } from "../../../../utils/ion";
+import { verifyMessage } from "../../../../utils/Ion";
 
 export default function Verify() {
   const [message, setMessage] = useState('');

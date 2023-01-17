@@ -1,4 +1,4 @@
-import { signMessage } from '../../utils/ion';
+import { signMessage } from '../../utils/Ion';
 
 export const register = async (email: string): Promise<UserCredsResponse> => {
   const response = await fetch('/api/register', {

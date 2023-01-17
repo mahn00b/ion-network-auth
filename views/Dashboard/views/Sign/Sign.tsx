@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { Box, Button, TextField, Typography, Dialog, DialogTitle, DialogContent } from "@mui/material";
 import CopyText from '../../../../components/CopyText';
-import { signMessage } from "../../../../utils/ion";
+import { signMessage } from "../../../../utils/Ion";
 
 export default function Sign() {
   const [selection, setSelection] = useState('');
