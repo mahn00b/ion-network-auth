@@ -1,89 +1,106 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ION Network Authentication
 
-## Getting Started
+#### [View a live demo here]()
 
-First, run the development server:
+| Table of Contents                               |
+| ----------------------------------------------- |
+| I. [Description](#description)                  |
+| II. [Usage](#usage)                              |
+| III. [Installation](#installation)              |
+| IV. [Authentication Flow](#authentication-flow) |
+| V. [Acknowledgements](#acknowledgments)         |
 
+## Description
+
+This project aims to demonstrate a possible authentication flow that uses the ION network to identify users. ION is a public, permissionless, Decentralized Identifier (DID) network that implements the blockchain-agnostic Sidetree protocol on top of Bitcoin (as a 'Layer 2' overlay) to support DIDs/DPKI (Decentralized Public Key Infrastructure) at scale. [Read more here](https://identity.foundation/ion/)
+
+## Usage
+
+### Pre-Requisites
+This app was built using `Next.js`. It requires that you have `Node.js` installed as well as one of the various node package managers
+
+**System Requirements**:
+- Node.js 14.6.0 or newer
+- MacOS, Windows (including WSL), and Linux are supported
+- Install `npm`, `yarn`, or `pnpm`
+
+### Installation
+
+After cloning the repo, you need to install the dependencies.
+
+using npm:
 ```bash
-npm run dev
-# or
-yarn dev
+$ npm install
+```
+using yarn:
+```bash
+$ yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development
+You can run it in dev mode so next automatically updates the DOM using hot reloading. You can do this simply by running one of the following lines.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+using npm:
+```bash
+$ npm run dev
+```
+using yarn:
+```bash
+$ yarn dev
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Visit at `localhost:3000`
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+##### production
+If you want to run a production instance of this webapp locally, you need to build it first. Once it's built, then you can use the start script to run it.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+using npm:
+```bash
+$ npm run build
 
-## Learn More
+# Build output here
 
-To learn more about Next.js, take a look at the following resources:
+$ npm run start
+```
+using yarn:
+```bash
+$ yarn build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Build output here
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+$ yarn start
+```
 
-## Deploy on Vercel
+Visit at `localhost:3000`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Authentication Flow
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+##### Registration
+The way the flow works is it creates a user and stores their DID URI and email. The email is mapped to the DIDUri. We then send them back their privateJWK encoded in `Base64`. We never store the privateJWK.
+
+##### Sign In
+When the User wants to log in. They submit their email and token. The token is used to sign a message on the client. This ensures that keys are secured by the user. Reducing possible vulnerabilities in our own systems.
+
+The message is verified by getting the DID URI mapped to the user's email and verifies the auth message. If the verification passes a session is created and the user has successfully been authenticated.
+
+![Sign In Flow](./screenshots/ion-auth-flow.drawio.png)
+
+## Reflections
+
+There are a few things in this project that I would do differently if it was production-facing. In no particular order, some of these thoughts include (but are not limited to):
+
+- Adding support for unit tests and adding commit hooks to validate code changes before pushing to the repo.
+- Adding e2e tests to verify the entire user flow.
+- Leveraging Material UI to implement a website "theme." Especially if designed using a design system.
+- Using a DB service to store User data. The type of DB might change depending on scale. The choice to use cookies was to simplify the demo.
+- I would hide the client-side implement of ION-tools. This way, we're not exposing our underlying authentication method. I would extend the API and use a different method for creating JSON Web Signatures.
+- API access logging and client-side monitoring
+- Create more conventions and patterns around commits
+
+## Acknowledgments
+
+This project was built using the [Material UI React library](https://mui.com/). The login/signup pages were built from a [template](https://github.com/mui/material-ui/tree/v5.11.4/docs/data/material/getting-started/templates/sign-in) (also provided by Material).
+
+Shout out to the [Decentralized Identity](https://identity.foundation/) team for providing the [ion-tools](https://github.com/decentralized-identity/ion-tools) lib. This made understanding and usage of the ION network very easily.
 
 
-## Frontend Planning
-
-In order to build the UI, I used a design pattern adapted from the ideas discussed in [atomic design](https://bradfrost.com/blog/post/atomic-web-design/). Using these concepts, we're able to break down the mock-up into a hierarchy of react components. The order of components, as it pertains to this project, are as follows:
-
-bit - The smallest possible components used to build up more complex UIs. Agnostic of the logic of the main application for max re-usability
-|
-containers - Complex components made up of multiple bits or with behavior pertaining to the overall application.
-|
-views - A fully-fledged UI that can use multiple containers and/or bits. Can contain an entire page.
-
-### Identify Components
-
-In order to plan out how to build the UI, we can start by identifying the core components needed to achieve the screenshots.
-
-![UI](./docs/screenshots/ui.png)
-
-#### Button (bit)
-
-There are two kinds of buttons in the mock-ups. One of them has a solid background and the other has a clear background. Using prop in the react component can help us differentiate styles. Further, there are instances of this component with a symbol next to the text. We can leverage [Font Awesome](https://fontawesome.com/start) to pull some relevant free icons. We can also use a prop to show/hide them.
-
-Primary
-![Primary Button](./docs/screenshots/primaryButton.png)
-
-Secondary
-![Secondary Button](./docs/screenshots/secondaryButton.png)
-
-#### input (bit)
-
-This component is very straightforward. We can leverage input HTMLAttributes and avoid planning complex props. This will allow us to focus on the styling.
-
-![Input](./docs/screenshots/input.png)
-
-#### ButtonGroup (container)
-
-We can use the above Button component to combine the buttons into a "group". We can build this component to be more specific to how our application runs. Further, we need to be aware of the parent's need to know when they are clicked. We can use a prop that acts as a clickHandler here.
-
-![Button Group](./docs/screenshots/buttonGroup.png)
-
-#### Clipboard (container)
-
-The clipboard is a bit more complex so we'll classify it as a container. This component must do the following
-
-- Display plain text
-- Display JSON (to a specific format)
-- Multiline or Single line
-- Have a styled horizontal scroller
-- Be able to capture when the copy button is clicked, and copy the relevant text to the user's clipboard
-
-We can use a single prop for the contents, and the use internal logic to determine if it's json or plaintext. We also need to accept prop a to determine if it'll be single-line or multi-line.
-
-![Clipboard](./docs/screenshots/clipboard.png)
