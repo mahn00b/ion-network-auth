@@ -65,7 +65,7 @@ export default function Verify() {
         variant="contained"
         sx={{ mt: 3, mb: 2 }}
       >
-        Sign Message
+        Verify Message
       </Button>
     </Box>
   )

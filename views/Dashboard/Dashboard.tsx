@@ -47,7 +47,7 @@ export default function Dashboard({
   }
 
   return (
-    <Container className={styles.Dashboard}>
+    <Container className={styles.Dashboard} sx={{ mt: '5rem'}}>
       <Button className={styles.signOut} onClick={onSignOut}>Sign out</Button>
       <Box className={styles.address} maxWidth="30rem">
         <Typography>Your DID Address</Typography>

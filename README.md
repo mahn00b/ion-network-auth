@@ -1,6 +1,6 @@
 # ION Network Authentication
 
-#### [View a live demo here]()
+#### [View a live demo here](https://ion-network-auth.vercel.app/)
 
 | Table of Contents                               |
 | ----------------------------------------------- |
@@ -96,11 +96,11 @@ There are a few things in this project that I would do differently if it was pro
 - I would hide the client-side implement of ION-tools. This way, we're not exposing our underlying authentication method. I would extend the API and use a different method for creating JSON Web Signatures.
 - API access logging and client-side monitoring
 - Create more conventions and patterns around commits
+- More of an emphasis on mobile responsiveness.
+- Storybook integration for component documentation.
 
 ## Acknowledgments
 
 This project was built using the [Material UI React library](https://mui.com/). The login/signup pages were built from a [template](https://github.com/mui/material-ui/tree/v5.11.4/docs/data/material/getting-started/templates/sign-in) (also provided by Material).
 
 Shout out to the [Decentralized Identity](https://identity.foundation/) team for providing the [ion-tools](https://github.com/decentralized-identity/ion-tools) lib. This made understanding and usage of the ION network very easily.
-
-
