@@ -37,7 +37,7 @@ export default class Session {
 
   end() {
     this.session = null
-    destroyCookie({ res: this.res }, COOKIE_NAME);
+    destroyCookie({ res: this.res }, COOKIE_NAME, { path: COOKIE_PATH });
   }
 
   save() {

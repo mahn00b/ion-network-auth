@@ -4,7 +4,7 @@ import { Session } from '../../data';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<UserCredsResponse | string>,
+  res: NextApiResponse,
 ) {
   new Session(req, res).end();
 

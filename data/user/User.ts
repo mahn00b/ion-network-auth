@@ -15,9 +15,16 @@ export default class User {
   res: NextApiResponse;
 
   constructor(req: NextApiRequest, res: NextApiResponse) {
-    const cookie = parseCookies({ req }, { path: COOKIE_PATH })[COOKIE_NAME] || ''
-    this.db = JSON.parse(cookie)
     this.res = res;
+
+    const cookie = parseCookies({ req }, { path: COOKIE_PATH })[COOKIE_NAME]
+
+    if (cookie) {
+      this.db = JSON.parse(cookie)
+    } else {
+      this.db = {}
+      this.save()
+    }
   }
 
   insert(email: string, DIDUri: string): UserData {
